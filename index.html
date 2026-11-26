@@ -1,425 +1,347 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#100b0b">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#100b12">
 <title>Advent of Kemet</title>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap');
-
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#100b12;
+ color:#e7c68b;
+ font-family:'Cormorant Garamond',serif;
+ min-height:100vh;
+ overflow-x:hidden;
 }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background:
-    radial-gradient(ellipse at 50% 0%, #392018 0%, transparent 50%),
-    linear-gradient(180, #100b0b, #080606 100%);
-  color: #ead8aa;
-  font-family: 'Cormorant Garamond', serif;
+body:before{
+ content:"";
+ position:fixed;inset:0;pointer-events:none;
+ background:
+ radial-gradient(ellipse at 50% 5%,rgba(119,62,85,.22),transparent 55%),
+ radial-gradient(ellipse at 0% 50%,rgba(116,66,33,.2),transparent 40%),
+ radial-gradient(ellipse at 100% 50%,rgba(116,66,33,.2),transparent 40%),
+ linear-gradient(180,#100b12,#1b1018 55%,#09070b);
+ z-index:-1;
 }
-
-.page {
-  max-width: 540px;
-  margin: auto;
-  padding: 26px 18px 50px;
+.page{
+ max-width:540px;
+ margin:auto;
+ padding:25px 14px 40px;
 }
-
-.header {
-  text-align: center;
-  padding: 20px 0 24px;
+.top{
+ text-align:center;
+ padding:14px 5px 12px;
 }
-
-.symbol {
-  font-size: 36px;
-  color: #c49a4a;
-  margin-bottom: 10px;
+.ankh{font-size:38px;color:#d9aa62;text-shadow:0 0 20px #9d662f}
+h1{
+ font-family:Cinzel,serif;
+ font-size:clamp(34px,10vw,49px);
+ font-weight:400;
+ line-height:1;
+ letter-spacing:4px;
+ margin:10px 0;
+ color:#dcb778;
+ text-shadow:0 3px 20px #000;
 }
-
-h1 {
-  font-family: 'Cinzel', serif;
-  font-size: 29px;
-  letter-spacing: 4px;
-  font-weight: 500;
-  color: #e7c675;
-  margin: 0;
+.subtitle{
+ font-size:19px;
+ letter-spacing:.5px;
+ color:#d6b98b;
+ margin:14px 0;
 }
-
-.subtitle {
-  font-size: 17px;
-  letter-spacing: 3px;
-  color: #a88b58;
-  margin-top: 12px;
+.rule{
+ width:78%;margin:18px auto;
+ height:1px;
+ background:linear-gradient(90,transparent,#bc884a,#f0d39a,#bc884a,transparent);
+ position:relative;
 }
-
-.rule {
-  height: 1px;
-  margin: 20px auto;
-  background: linear-gradient(90deg, transparent, #9a7437, transparent);
+.rule:after{
+ content:"◇";
+ position:absolute;left:50%;top:-11px;
+ transform:translateX(-50%);
+ background:#160e16;padding:0 8px;color:#d6a55e;
 }
-
-.intro {
-  text-align: center;
-  font-size: 19px;
-  line-height: 1.45;
-  color: #c6b38d;
-  margin: 24px 0;
+.season{
+ font-size:12px;
+ letter-spacing:4px;
+ text-transform:uppercase;
+ color:#9f7850;
+ margin-top:17px;
 }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+.calendar{
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:10px;
+ margin:22px 0;
 }
-
-.door {
-  position: relative;
-  min-height: 100px;
-  border: 1px solid #8b672e;
-  background:
-    linear-gradient(145deg, #362018, #17100d 60%, #27170f);
-  color: #d5ae65;
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  transition: 0.25s;
-  box-shadow: inset 0 0 15px #0008;
+.day{
+ position:relative;
+ aspect-ratio:1/1.12;
+ border:1px solid #70502d;
+ border-radius:48% 48% 5px 5px;
+ background:linear-gradient(150deg,#241821,#0c090e 75%);
+ box-shadow:inset 0 0 12px #000,0 2px 6px #000;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ cursor:pointer;
+ overflow:hidden;
 }
-
-.door:before {
-  content: "";
-  position: absolute;
-  inset: 4px;
-  border: 1px solid #9b773c55;
-  pointer-events: none;
+.day:before{
+ content:"";
+ position:absolute;
+ inset:5px;
+ border:1px solid rgba(173,125,62,.32);
+ border-radius:48% 48% 3px 3px;
+ pointer-events:none;
 }
-
-.door:hover {
-  transform: translateY(-3px);
-  border-color: #e0bd72;
-  box-shadow: 0 0 18px #b38a3a33, inset 0 0 15px #0008;
+.day:after{
+ content:"✦";
+ position:absolute;
+ top:5px;
+ color:#8d623a;
+ font-size:10px;
 }
-
-.door .number {
-  font-family: 'Cinzel', serif;
-  font-size: 30px;
-  z-index: 1;
+.number{
+ font-family:Cinzel,serif;
+ font-size:clamp(21px,7vw,32px);
+ color:#d6ad75;
+ z-index:1;
 }
-
-.door .mini {
-  font-size: 16px;
-  margin-top: 4px;
-  color: #927445;
+.lock{
+ font-size:15px;
+ margin-top:4px;
+ color:#b38a58;
+ z-index:1;
 }
-
-.door.locked {
-  filter: brightness(.65);
-  cursor: default;
+.day.locked{opacity:.82}
+.day.available{
+ border-color:#d6a34f;
+ box-shadow:inset 0 0 17px rgba(218,163,76,.14),0 0 12px rgba(212,154,65,.2);
+ animation:glow 2.5s infinite alternate;
 }
-
-.door.locked:hover {
-  transform: none;
+.day.opened{
+ background:linear-gradient(145deg,#342317,#171018);
+ border-color:#ba9459;
 }
-
-.door.opened {
-  background: linear-gradient(145deg, #60441f, #29180d);
-  border-color: #d0a64f;
+.day.opened .lock{display:none}
+@keyframes glow{
+ from{box-shadow:inset 0 0 8px rgba(214,160,65,.1)}
+ to{box-shadow:inset 0 0 20px rgba(214,160,65,.24),0 0 13px rgba(214,160,65,.18)}
 }
-
-.door.opened .mini {
-  color: #e3c57e;
+.footer{
+ text-align:center;
+ margin:27px 0 0;
 }
-
-.footer {
-  text-align: center;
-  color: #8c754d;
-  font-size: 16px;
-  margin-top: 28px;
-  letter-spacing: 1px;
+.footerbox{
+ border:1px solid #8a653d;
+ padding:15px 10px;
+ background:linear-gradient(90deg,transparent,rgba(49,31,34,.7),transparent);
 }
-
-.preview {
-  display: block;
-  margin: 25px auto 0;
-  background: transparent;
-  border: 1px solid #705329;
-  color: #a98a51;
-  padding: 9px 16px;
-  border-radius: 3px;
-  font-family: inherit;
-  font-size: 15px;
-  cursor: pointer;
+.footer-title{
+ font-family:Cinzel,serif;
+ font-size:17px;
+ letter-spacing:1px;
 }
-
-.preview.active {
-  background: #6d4c21;
-  color: #f1d594;
+.footer-sub{font-size:17px;margin-top:3px;color:#c5a77d}
+.snow{
+ position:fixed;top:-10px;color:#e9dfd4;
+ opacity:.45;pointer-events:none;
+ animation:fall linear infinite;
+ z-index:3;
 }
-
-/* окно подарка */
-
-.overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  background: #050303ee;
-  padding: 20px;
-  align-items: center;
-  justify-content: center;
+@keyframes fall{
+ to{transform:translateY(110vh) rotate(180deg)}
 }
-
-.overlay.show {
-  display: flex;
+.hidden{display:none!important}
+.overlay{
+ position:fixed;inset:0;
+ background:rgba(4,3,6,.94);
+ display:flex;align-items:center;justify-content:center;
+ padding:20px;
+ z-index:10;
 }
-
-.modal {
-  width: 100%;
-  max-width: 440px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 25px 20px;
-  background:
-    radial-gradient(ellipse at top, #422b19, transparent 65%),
-    #120c0a;
-  border: 1px solid #a17a3d;
-  text-align: center;
-  box-shadow: 0 0 40px #000;
+.modal{
+ width:100%;max-width:440px;
+ max-height:90vh;overflow:auto;
+ text-align:center;
+ border:1px solid #a37a43;
+ padding:25px 18px;
+ background:radial-gradient(ellipse at top,#35202c,#110b12 70%);
+ box-shadow:0 0 30px #000;
 }
-
-.modal-symbol {
-  font-size: 38px;
-  color: #d2aa5a;
+.modal h2{
+ font-family:Cinzel,serif;
+ font-size:27px;font-weight:400;
+ color:#e2bb7d;
 }
-
-.modal h2 {
-  font-family: 'Cinzel', serif;
-  font-weight: 500;
-  color: #e2bf76;
-  letter-spacing: 2px;
-  margin: 10px 0;
+.art-placeholder{
+ min-height:240px;
+ border:1px solid #72512f;
+ background:
+ radial-gradient(ellipse,rgba(113,64,100,.2),transparent 60%),
+ linear-gradient(145deg,#1d131d,#09070a);
+ display:flex;align-items:center;justify-content:center;
+ padding:25px;
+ color:#8f704f;
+ font-size:18px;
+ margin:15px 0;
 }
-
-.modal p {
-  color: #c6b38d;
-  font-size: 20px;
-  line-height: 1.45;
+.quote{
+ font-size:22px;
+ font-style:italic;
+ color:#dfbd8d;
+ margin:18px 5px;
 }
-
-.art-placeholder {
-  min-height: 230px;
-  border: 1px dashed #8b672e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 18px 0;
-  background: #090606;
-  color: #80643a;
-  padding: 15px;
-  font-size: 18px;
+button{
+ background:linear-gradient(100deg,#6e4824,#b88b4b,#6e4824);
+ color:#120c10;
+ border:1px solid #d5ad70;
+ padding:12px 25px;
+ font-family:Cinzel,serif;
+ font-size:15px;
+ letter-spacing:1px;
+ margin-top:12px;
+ cursor:pointer;
 }
-
-.close {
-  border: 1px solid #a17a3d;
-  background: #28180d;
-  color: #e1bf76;
-  padding: 10px 22px;
-  font-family: inherit;
-  font-size: 18px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.note {
-  font-size: 14px;
-  color: #806b4a;
-  margin-top: 20px;
-}
-
-@media (max-width: 360px) {
-  .grid {
-    gap: 8px;
-  }
-  .door {
-    min-height: 85px;
-  }
-  h1 {
-    font-size: 24px;
-  }
-}
+.small{font-size:14px;color:#b29a7b}
 </style>
 </head>
 
 <body>
-<main class="page">
+<div class="page">
 
-  <header class="header">
-    <div class="symbol">𓂀</div>
-    <h1>ADVENT OF KEMET</h1>
-    <div class="subtitle">THE ANCIENT GIFT CALENDAR</div>
-    <div class="rule"></div>
-  </header>
+ <header class="top">
+  <div class="ankh">☥</div>
+  <h1>ADVENT<br>OF KEMET</h1>
+  <div class="rule"></div>
+  <div class="subtitle">24 дня. 24 сюрприза. 1 тайна каждый день.</div>
+  <div class="season">❄ Мистический адвент Кемета ❄</div>
+ </header>
 
-  <div class="intro">
-    Двадцать четыре врата.<br>
-    Двадцать четыре тайны.<br>
-    <span style="color:#d0a65c">Открой свой дар из древнего Кемета.</span>
+ <main>
+  <div class="calendar" id="calendar"></div>
+ </main>
+
+ <footer class="footer">
+  <div class="rule"></div>
+  <div class="footerbox">
+   <div class="footer-title">✦ Открой календарь ✦</div>
+   <div class="footer-sub">и узнай, какие тайны скрывает Кемет...</div>
   </div>
+ </footer>
 
-  <section class="grid" id="calendar"></section>
+</div>
 
-  <div class="footer">
-    𓆣 &nbsp; MAY THE GODS GUIDE YOU &nbsp; 𓆣
+<!-- Предупреждение 18+ -->
+<div class="overlay hidden" id="age">
+ <div class="modal">
+  <div class="ankh">☥</div>
+  <h2>Тайны Кемета</h2>
+  <p class="quote">Этот календарь предназначен только для совершеннолетних.</p>
+  <p>Внутри тебя ждут материалы 18+.</p>
+  <button onclick="enter()">Мне есть 18 лет</button>
+  <br>
+  <button onclick="closeAge()" style="background:transparent;color:#c5a77d">Назад</button>
+ </div>
+</div>
+
+<!-- Открытие дня -->
+<div class="overlay hidden" id="gift">
+ <div class="modal">
+  <div class="ankh">☥</div>
+  <h2 id="giftTitle">Тайна дня</h2>
+  <div class="art-placeholder" id="art">
+   ✧ Здесь появится арт ✧
   </div>
-
-  <button class="preview" id="previewBtn" onclick="togglePreview()">
-    Режим создателя: ВЫКЛ
-  </button>
-
-  <div class="note">
-    Дары прошлого остаются открытыми.
-  </div>
-
-</main>
-
-<div class="overlay" id="overlay" onclick="outsideClose(event)">
-  <div class="modal">
-    <div class="modal-symbol">𓂀</div>
-    <h2 id="giftTitle">Врата открыты</h2>
-    <div class="rule"></div>
-    <div class="art-placeholder" id="giftArt">
-      Здесь появится твой арт
-    </div>
-    <p id="giftText"></p>
-    <button class="close" onclick="closeGift()">Вернуться к календарю</button>
-  </div>
+  <div class="quote" id="quote">Цитата этого дня появится здесь...</div>
+  <button onclick="back()">Вернуться к календарю</button>
+ </div>
 </div>
 
 <script>
-const ADVENT_YEAR = 2026;
-const gifts = [
-  "Первый дар Кемета",
-  "Тайна фараонов",
-  "Шёпот пустыни",
-  "Проклятие пирамид",
-  "Золотой рассвет",
-  "Врата Осириса",
-  "Зов Нила",
-  "Тайна жреца",
-  "Пески времени",
-  "Сокровище Египта",
-  "Око Ра",
-  "Тени храма",
-  "Печать Анубиса",
-  "Забытый ритуал",
-  "Золотой саркофаг",
-  "Лунный Кемет",
-  "Благословение богов",
-  "Секрет свитка",
-  "Дыхание вечности",
-  "Путь избранных",
-  "Звезда над Нилом",
-  "Последнее пророчество",
-  "Дар богини",
-  "Величайшая тайна"
-];
+const tg=window.Telegram?.WebApp;
+tg?.ready();
+tg?.expand();
 
-let previewMode = false;
+const calendar=document.getElementById("calendar");
+const today=new Date();
+const year=2026;
+const creator=new URLSearchParams(location.search).get("creator")==="1";
 
-const calendar = document.getElementById("calendar");
+let selectedDay=1;
 
-function todayInAdvent() {
-  const now = new Date();
-  if (now.getFullYear() !== ADVENT_YEAR || now.getMonth() !== 11) return 0;
-  return now.getDate();
+for(let i=1;i<=24;i++){
+ const tile=document.createElement("div");
+ tile.className="day locked";
+ tile.innerHTML=`<div class="number">${i}</div><div class="lock">🔒</div>`;
+ tile.onclick=()=>openDay(i);
+ calendar.appendChild(tile);
 }
 
-function isUnlocked(day) {
-  return previewMode || day <= todayInAdvent();
+function isUnlocked(day){
+ if(creator)return true;
+ const now=new Date();
+ return now.getFullYear()>year ||
+ (now.getFullYear()===year && now.getMonth()===11 && now.getDate()>=day);
 }
 
-function renderCalendar() {
-  calendar.innerHTML = "";
+function openDay(day){
+ selectedDay=day;
+ if(!isUnlocked(day)){
+  alert("Эта тайна пока скрыта. Возвращайся в свой день ✨");
+  return;
+ }
+ document.getElementById("age").classList.remove("hidden");
+}
 
-  for (let day = 1; day <= 24; day++) {
-    const unlocked = isUnlocked(day);
+function enter(){
+ document.getElementById("age").classList.add("hidden");
+ document.getElementById("gift").classList.remove("hidden");
+ document.getElementById("giftTitle").textContent="Тайна "+selectedDay;
+ document.getElementById("quote").textContent="Цитата появится здесь...";
+}
 
-    const door = document.createElement("button");
-    door.className = "door " + (unlocked ? "opened" : "locked");
+function closeAge(){
+ document.getElementById("age").classList.add("hidden");
+}
 
-    const icon = unlocked ? "✧" : "𓊝";
+function back(){
+ document.getElementById("gift").classList.add("hidden");
+}
 
-    door.innerHTML = `
-      <span class="number">${String(day).padStart(2,"0")}</span>
-      <span class="mini">${icon}</span>
-    `;
-
-    door.onclick = () => {
-      if (!isUnlocked(day)) {
-        showLocked(day);
-      } else {
-        openGift(day);
-      }
-    };
-
-    calendar.appendChild(door);
+function updateTiles(){
+ const tiles=document.querySelectorAll(".day");
+ tiles.forEach((tile,index)=>{
+  const day=index+1;
+  if(isUnlocked(day)){
+   tile.classList.remove("locked");
+   tile.classList.add("available");
+   tile.querySelector(".lock").textContent="✧";
   }
+ });
 }
+updateTiles();
 
-function openGift(day) {
-  document.getElementById("giftTitle").textContent =
-    "Дар №" + String(day).padStart(2,"0");
-
-  document.getElementById("giftArt").innerHTML =
-    "𓂀<br><br>Здесь будет твой арт №" + day +
-    "<br><br>Добавим изображение на следующем этапе";
-
-  document.getElementById("giftText").textContent =
-    gifts[day - 1];
-
-  document.getElementById("overlay").classList.add("show");
+// Снег
+for(let i=0;i<24;i++){
+ const flake=document.createElement("div");
+ flake.className="snow";
+ flake.textContent="❄";
+ flake.style.left=Math.random()*100+"vw";
+ flake.style.animationDuration=(7+Math.random()*12)+"s";
+ flake.style.animationDelay=(-Math.random()*15)+"s";
+ flake.style.fontSize=(8+Math.random()*12)+"px";
+ document.body.appendChild(flake);
 }
-
-function showLocked(day) {
-  document.getElementById("giftTitle").textContent = "Врата закрыты";
-
-  document.getElementById("giftArt").innerHTML =
-    "𓆣<br><br>Этот дар ещё скрыт во тьме";
-
-  document.getElementById("giftText").textContent =
-    "Возвращайся " + day + " декабря, чтобы открыть тайну Кемета.";
-
-  document.getElementById("overlay").classList.add("show");
-}
-
-function closeGift() {
-  document.getElementById("overlay").classList.remove("show");
-}
-
-function outsideClose(event) {
-  if (event.target.id === "overlay") closeGift();
-}
-
-function togglePreview() {
-  previewMode = !previewMode;
-
-  const btn = document.getElementById("previewBtn");
-  btn.textContent = "Режим создателя: " +
-    (previewMode ? "ВКЛ" : "ВЫКЛ");
-  btn.classList.toggle("active", previewMode);
-
-  renderCalendar();
-}
-
-renderCalendar();
 </script>
 </body>
 </html>
