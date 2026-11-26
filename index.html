@@ -213,7 +213,30 @@ button{
  cursor:pointer;
 }
 .small{font-size:14px;color:#b29a7b}
-</style>
+/* Золотое магическое мерцание */
+.day {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.day.available {
+  animation: goldPulse 3s ease-in-out infinite;
+}
+
+.day.available:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 0 18px rgba(212, 170, 90, 0.35);
+}
+
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(212, 170, 90, 0.08);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(212, 170, 90, 0.25);
+  }
+}</style>
 </head>
 
 <body>
