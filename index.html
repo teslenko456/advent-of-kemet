@@ -339,7 +339,11 @@ function openDay(day){
   alert("Эта тайна пока скрыта. Возвращайся в свой день ✨");
   return;
  }
- document.getElementById("age").classList.remove("hidden");
+ const ageBox = document.getElementById("age");
+ageBox.classList.remove("hidden");
+ageBox.style.animation = "none";
+ageBox.offsetHeight;
+ageBox.style.animation = "revealMystery 0.6s ease-out";
 }
 
 function enter(){
