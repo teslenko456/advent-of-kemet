@@ -380,10 +380,19 @@ function openDay(day){
  modal.classList.add("reveal");
 }
 function enter(){
- document.getElementById("age").classList.add("hidden");
- document.getElementById("gift").classList.remove("hidden");
+ const ageBox=document.getElementById("age");
+ const giftBox=document.getElementById("gift");
+ const modal=giftBox.querySelector(".modal");
+
+ ageBox.classList.add("hidden");
+ giftBox.classList.remove("hidden");
+
  document.getElementById("giftTitle").textContent="Тайна "+selectedDay;
  document.getElementById("quote").textContent="Цитата появится здесь...";
+
+ modal.classList.remove("reveal");
+ void modal.offsetWidth;
+ modal.classList.add("reveal");
 }
 
 function closeAge(){
