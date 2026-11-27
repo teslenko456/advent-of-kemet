@@ -232,6 +232,21 @@ button{
 
 
 }
+}@keyframes revealMystery {
+  from {
+    opacity: 0;
+    transform: scale(0.75);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+#age:not(.hidden) {
+  animation: revealMystery 0.6s ease-out;
 }</style>
 </head>
 
