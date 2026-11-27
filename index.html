@@ -189,7 +189,7 @@ h1{
  box-shadow:0 0 30px #000;
 }
 #age:not(.hidden) .modal {
- animation: revealMystery 0.8s ease-out;
+ animation: revealMystery 0.8s ease-out both;
 }
 .modal h2{
  font-family:Cinzel,serif;
@@ -235,7 +235,7 @@ button{
 
 
 }
-}@keyframes revealMystery {
+@keyframes revealMystery {
   from {
     opacity: 0;
     transform: scale(0.75);
@@ -341,10 +341,7 @@ function openDay(day){
   return;
  }
  const ageBox = document.getElementById("age");
-ageBox.classList.remove("hidden");
-ageBox.style.animation = "none";
-ageBox.offsetHeight;
-ageBox.style.animation = "revealMystery 0.6s ease-out";
+ ageBox.classList.remove("hidden");
 }
 
 function enter(){
