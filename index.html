@@ -292,15 +292,15 @@ button{
 @keyframes goldSparkle{
  0%{
   opacity:0;
-  transform:scale(0);
+  transform:translate(0,0) scale(0);
  }
  20%{
   opacity:1;
-  transform:scale(1.5);
+  transform:translate(0,0) scale(1.5);
  }
  100%{
   opacity:0;
-  transform:translateY(-90px) scale(0);
+  transform:translate(var(--dx),var(--dy)) scale(0);
  }
 }
 </style>
@@ -423,6 +423,8 @@ for(let i=0;i<18;i++){
  particle.className="gold-particle";
  particle.style.left=Math.random()*100+"vw";
  particle.style.top=(50+Math.random()*40)+"vh";
+ particle.style.setProperty("--dx",(Math.random()*280-140)+"px");
+ particle.style.setProperty("--dy",(Math.random()*240-160)+"px");
  document.body.appendChild(particle);
  setTimeout(()=>particle.remove(),1800);
 }
