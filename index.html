@@ -302,11 +302,16 @@ for(let i=1;i<=24;i++){
  calendar.appendChild(tile);
 }
 
+const launchDate = new Date(2026, 11, 5);
+
 function isUnlocked(day){
  if(creator)return true;
  const now=new Date();
- return now.getFullYear()>year ||
- (now.getFullYear()===year && now.getMonth()===11 && now.getDate()>=day);
+ now.setHours(0,0,0,0);
+ const start=new Date(launchDate);
+ start.setHours(0,0,0,0);
+ const elapsed=Math.floor((now-start)/86400000)+1;
+ return elapsed>=day;
 }
 
 function openDay(day){
