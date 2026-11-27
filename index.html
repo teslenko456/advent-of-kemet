@@ -257,6 +257,27 @@ button{
   }
 }
 
+.modal.reveal{
+ animation: mysteryOpen 0.8s ease-out both;
+}
+
+@keyframes mysteryOpen{
+ 0%{
+  opacity:0;
+  transform:scale(0.65) rotate(-4deg);
+  filter:blur(12px);
+ }
+ 60%{
+  opacity:1;
+  transform:scale(1.05) rotate(1deg);
+  filter:blur(0);
+ }
+ 100%{
+  opacity:1;
+  transform:scale(1) rotate(0);
+  filter:blur(0);
+ }
+}
 </style>
 </head>
 
@@ -349,10 +370,15 @@ function openDay(day){
   alert("Эта тайна пока скрыта. Возвращайся в свой день ✨");
   return;
  }
- const ageBox = document.getElementById("age");
- ageBox.classList.remove("hidden");
-}
 
+ const ageBox=document.getElementById("age");
+ const modal=ageBox.querySelector(".modal");
+
+ ageBox.classList.remove("hidden");
+ modal.classList.remove("reveal");
+ void modal.offsetWidth;
+ modal.classList.add("reveal");
+}
 function enter(){
  document.getElementById("age").classList.add("hidden");
  document.getElementById("gift").classList.remove("hidden");
