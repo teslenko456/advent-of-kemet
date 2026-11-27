@@ -188,8 +188,17 @@ h1{
  background:radial-gradient(ellipse at top,#35202c,#110b12 70%);
  box-shadow:0 0 30px #000;
 }
+#age .modal {
+  opacity: 0;
+  transform: scale(0.7);
+  filter: blur(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+}
+
 #age:not(.hidden) .modal {
- animation: revealMystery 0.8s ease-out both;
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
 }
 .modal h2{
  font-family:Cinzel,serif;
