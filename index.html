@@ -450,17 +450,18 @@ for(let i=0;i<18;i++){
  document.body.appendChild(particle);
  setTimeout(()=>particle.remove(),1800);
 }
-}
 for(let i=0;i<35;i++){
  const dust=document.createElement("div");
  dust.className="gold-dust";
-dust.style.width="8px";
-dust.style.height="8px";
+ dust.style.width="8px";
+ dust.style.height="8px";
  dust.style.left=Math.random()*100+"vw";
  dust.style.top=(50+Math.random()*40)+"vh";
  document.body.appendChild(dust);
  setTimeout(()=>dust.remove(),3000);
 }
+}
+
 function closeAge(){
  document.getElementById("age").classList.add("hidden");
 }
