@@ -278,6 +278,32 @@ button{
   filter:blur(0);
  }
 }
+.gold-particle{
+ position:fixed;
+ width:5px;
+ height:5px;
+ background:#f6d477;
+ border-radius:50%;
+ box-shadow:0 0 8px 3px rgba(246,212,119,.7);
+ pointer-events:none;
+ z-index:20;
+ animation:goldSparkle 1.8s ease-out forwards;
+}
+
+@keyframes goldSparkle{
+ 0%{
+  opacity:0;
+  transform:scale(0);
+ }
+ 20%{
+  opacity:1;
+  transform:scale(1.5);
+ }
+ 100%{
+  opacity:0;
+  transform:translateY(-90px) scale(0);
+ }
+}
 </style>
 </head>
 
@@ -393,6 +419,14 @@ function enter(){
  modal.classList.remove("reveal");
  void modal.offsetWidth;
  modal.classList.add("reveal");
+for(let i=0;i<18;i++){
+ const particle=document.createElement("div");
+ particle.className="gold-particle";
+ particle.style.left=Math.random()*100+"vw";
+ particle.style.top=(50+Math.random()*40)+"vh";
+ document.body.appendChild(particle);
+ setTimeout(()=>particle.remove(),1800);
+}
 }
 
 function closeAge(){
