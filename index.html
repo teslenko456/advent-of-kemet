@@ -124,6 +124,25 @@ h1{
  border-radius:48% 48% 3px 3px;
  pointer-events:none;
 }
+.day::after{
+ content:"";
+ position:absolute;
+ top:-100%;
+ left:-60%;
+ width:50%;
+ height:250%;
+ background:linear-gradient(
+  120deg,
+  transparent,
+  rgba(255,215,120,.25),
+  rgba(255,240,190,.65),
+  rgba(255,215,120,.25),
+  transparent
+ );
+ transform:rotate(25deg);
+ animation:goldShine 6s ease-in-out infinite;
+ pointer-events:none;
+}
 .day:after{
  content:"✦";
  position:absolute;
@@ -330,6 +349,16 @@ button{
  100%{
   opacity:0;
   transform:translate(var(--dx),var(--dy)) scale(0);
+ }
+}
+@keyframes goldShine{
+ 0%{
+  top:-100%;
+  left:-60%;
+ }
+ 50%,100%{
+  top:100%;
+  left:120%;
  }
 }
 @keyframes dustFloat{
