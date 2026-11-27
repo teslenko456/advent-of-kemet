@@ -379,6 +379,21 @@ button{
   transform:translateY(-180px) scale(1);
  }
 }
+.hero{
+ width:100%;
+ height:100vh;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ overflow:hidden;
+}
+
+.hero img{
+ width:100%;
+ height:100%;
+ object-fit:contain;
+ object-position:center;
+}
 </style>
 </head>
 
@@ -393,7 +408,10 @@ button{
   <div class="season">❄ Мистический адвент Кемета ❄</div>
  </header>
 
- <main>
+ <div class="hero">
+ <img src="FDA0DD43-55A1-4CCD-BBC4-14F95D4F221F.png" alt="">
+</div>
+<main>
   <div class="calendar" id="calendar"></div>
  </main>
 
